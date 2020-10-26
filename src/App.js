@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import { Breadcrumb, Button, Layout, Menu, Typography, Table } from 'antd';
+
+import TableComp from './comps/TableComp';
+import HeaderComp from './comps/HeaderComp';
+import SiderComp from './comps/SiderComp';
+import ColSwitch from './comps/ColSwitch';
+
+const { Footer, Sider, Content } = Layout;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Layout>
+        <HeaderComp />
+        <Layout>
+          <SiderComp />
+          <Layout>
+            <Content style={{ padding: '0 50px' }}>
+              <Breadcrumb style={{ margin: '16px 0' }}>
+                <Breadcrumb.Item>Categories</Breadcrumb.Item>
+              </Breadcrumb>
+              <div className='site-layout-content'>
+                <TableComp />
+              </div>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>Example Footer</Footer>
+          </Layout>
+        </Layout>
+      </Layout>
     </div>
   );
 }

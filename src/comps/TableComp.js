@@ -27,6 +27,7 @@ const columns = [
     title: 'Score',
     dataIndex: 'score',
     defaultSortOrder: 'descend',
+    className: 'show',
     sorter: (a, b) => a.score - b.score,
   },
   {

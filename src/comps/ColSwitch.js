@@ -10,8 +10,6 @@ const pagination = { position: 'bottom' };
 
 class ColSwitch extends Component {
   state = {
-    bordered: false,
-    loading: false,
     pagination,
     size: 'default',
     showHeader,
@@ -87,17 +85,26 @@ class ColSwitch extends Component {
     this.setState({ hasData });
   };
 
-  // handleScoreColChange = () => {
-  //   this.setState({
-  //     column: [{ title: 'Score', dataIndex: 'score', className: 'hide' }],
-  //   });
-  // };
-  onChange = () => {
+  onChangeScore = () => {
     const arr = getColumns();
     arr.filter((item) => item.title !== 'Score');
     if (this.state.column[0].dataIndex === 'score') {
       this.setState({
         column: [...arr.filter((item) => item.title !== 'Score')],
+      });
+    } else {
+      this.setState({
+        column: [...arr],
+      });
+    }
+  };
+
+  onChangeAirline = () => {
+    const arr = getColumns();
+    arr.filter((item) => item.title !== 'Airline');
+    if (this.state.column[1].dataIndex === 'airline') {
+      this.setState({
+        column: [...arr.filter((item) => item.title !== 'Airline')],
       });
     } else {
       this.setState({
@@ -116,24 +123,22 @@ class ColSwitch extends Component {
       scroll.x = '100vw';
     }
 
-    const columns = getColumns();
-    const tableColumns = columns.filter((item) => item.className === 'show');
-    if (xScroll === 'fixed') {
-      tableColumns[0].fixed = true;
-      tableColumns[tableColumns.length - 1].fixed = 'right';
-    }
-
     return (
       <>
         <Form
-          layout='inline'
           className='components-table-demo-control-bar'
           style={{ marginBottom: 16 }}
         >
-          <Form.Item label='Score Header'>
+          <Form.Item label='Score Header' className='score header'>
             <Switch
               checked={this.state.column[0].dataIndex === 'score'}
-              onChange={this.onChange}
+              onChange={this.onChangeScore}
+            />
+          </Form.Item>
+          <Form.Item label='Airline Header' className='airline header'>
+            <Switch
+              checked={this.state.column[1].dataIndex === 'airline'}
+              onChange={this.onChangeAirline}
             />
           </Form.Item>
           <Form.Item label='Size'>

@@ -42,3 +42,8 @@
 .show {
   display: block;
 }
+
+.header {
+  float: right;
+  margin-left: 0.6em;
+}

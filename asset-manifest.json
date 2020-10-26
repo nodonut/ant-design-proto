@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/ant-design-proto/static/css/main.ee0690dc.chunk.css",
-    "main.js": "/ant-design-proto/static/js/main.a98443af.chunk.js",
-    "main.js.map": "/ant-design-proto/static/js/main.a98443af.chunk.js.map",
+    "main.js": "/ant-design-proto/static/js/main.434f420b.chunk.js",
+    "main.js.map": "/ant-design-proto/static/js/main.434f420b.chunk.js.map",
     "runtime-main.js": "/ant-design-proto/static/js/runtime-main.80effb0f.js",
     "runtime-main.js.map": "/ant-design-proto/static/js/runtime-main.80effb0f.js.map",
     "static/css/2.fd8a6fac.chunk.css": "/ant-design-proto/static/css/2.fd8a6fac.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.fd8a6fac.chunk.css",
     "static/js/2.79ff28c0.chunk.js",
     "static/css/main.ee0690dc.chunk.css",
-    "static/js/main.a98443af.chunk.js"
+    "static/js/main.434f420b.chunk.js"
   ]
 }

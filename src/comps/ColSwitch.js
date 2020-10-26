@@ -95,9 +95,15 @@ class ColSwitch extends Component {
   onChange = () => {
     const arr = getColumns();
     arr.filter((item) => item.title !== 'Score');
-    this.setState({
-      column: [...arr.filter((item) => item.title !== 'Score')],
-    });
+    if (this.state.column[0].dataIndex === 'score') {
+      this.setState({
+        column: [...arr.filter((item) => item.title !== 'Score')],
+      });
+    } else {
+      this.setState({
+        column: [...arr],
+      });
+    }
   };
   render() {
     const { xScroll, yScroll, ...state } = this.state;

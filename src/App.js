@@ -21,7 +21,7 @@ function App() {
                 <Breadcrumb.Item>Categories</Breadcrumb.Item>
               </Breadcrumb>
               <div className='site-layout-content'>
-                <TableComp />
+                <ColSwitch />
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Example Footer</Footer>

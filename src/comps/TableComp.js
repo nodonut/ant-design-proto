@@ -48,7 +48,6 @@ const columns = [
     title: 'Thermal Screening',
     dataIndex: 'therm_screen',
     defaultSortOrder: 'descend',
-    sorter: (a, b) => a.age - b.age,
   },
   {
     title: 'Face Masks',
@@ -116,18 +115,22 @@ function onChange(pagination, filters, sorter, extra) {
   console.log('params', pagination, filters, sorter, extra);
 }
 
-const showHeader = true;
+// function TableComp({ pagination, scroll }) {
+//   return (
+//     <Table
+//       pagination={pagination}
+//       scroll={scroll}
+//       columns={columns}
+//       dataSource={data}
+//       onChange={onChange}
+//     />
+//   );
+// }
 
-class TableComp extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  state = {
-    showHeader,
-  };
-  render() {
-    return <Table columns={columns} dataSource={data} onChange={onChange} />;
-  }
+export function getColumns() {
+  return columns;
 }
 
-export default TableComp;
+export function getData() {
+  return data;
+}

@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/ant-design-proto/static/css/main.e05a3960.chunk.css",
-    "main.js": "/ant-design-proto/static/js/main.81766d1b.chunk.js",
-    "main.js.map": "/ant-design-proto/static/js/main.81766d1b.chunk.js.map",
-    "runtime-main.js": "/ant-design-proto/static/js/runtime-main.43ec700e.js",
-    "runtime-main.js.map": "/ant-design-proto/static/js/runtime-main.43ec700e.js.map",
+    "main.css": "/ant-design-proto/static/css/main.ee0690dc.chunk.css",
+    "main.js": "/ant-design-proto/static/js/main.b3097996.chunk.js",
+    "main.js.map": "/ant-design-proto/static/js/main.b3097996.chunk.js.map",
+    "runtime-main.js": "/ant-design-proto/static/js/runtime-main.80effb0f.js",
+    "runtime-main.js.map": "/ant-design-proto/static/js/runtime-main.80effb0f.js.map",
     "static/css/2.fd8a6fac.chunk.css": "/ant-design-proto/static/css/2.fd8a6fac.chunk.css",
-    "static/js/2.54fd5515.chunk.js": "/ant-design-proto/static/js/2.54fd5515.chunk.js",
-    "static/js/2.54fd5515.chunk.js.map": "/ant-design-proto/static/js/2.54fd5515.chunk.js.map",
-    "static/js/3.8512d35d.chunk.js": "/ant-design-proto/static/js/3.8512d35d.chunk.js",
-    "static/js/3.8512d35d.chunk.js.map": "/ant-design-proto/static/js/3.8512d35d.chunk.js.map",
+    "static/js/2.dd9be805.chunk.js": "/ant-design-proto/static/js/2.dd9be805.chunk.js",
+    "static/js/2.dd9be805.chunk.js.map": "/ant-design-proto/static/js/2.dd9be805.chunk.js.map",
+    "static/js/3.e2a61810.chunk.js": "/ant-design-proto/static/js/3.e2a61810.chunk.js",
+    "static/js/3.e2a61810.chunk.js.map": "/ant-design-proto/static/js/3.e2a61810.chunk.js.map",
     "index.html": "/ant-design-proto/index.html",
     "static/css/2.fd8a6fac.chunk.css.map": "/ant-design-proto/static/css/2.fd8a6fac.chunk.css.map",
-    "static/css/main.e05a3960.chunk.css.map": "/ant-design-proto/static/css/main.e05a3960.chunk.css.map",
-    "static/js/2.54fd5515.chunk.js.LICENSE.txt": "/ant-design-proto/static/js/2.54fd5515.chunk.js.LICENSE.txt"
+    "static/css/main.ee0690dc.chunk.css.map": "/ant-design-proto/static/css/main.ee0690dc.chunk.css.map",
+    "static/js/2.dd9be805.chunk.js.LICENSE.txt": "/ant-design-proto/static/js/2.dd9be805.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.43ec700e.js",
+    "static/js/runtime-main.80effb0f.js",
     "static/css/2.fd8a6fac.chunk.css",
-    "static/js/2.54fd5515.chunk.js",
-    "static/css/main.e05a3960.chunk.css",
-    "static/js/main.81766d1b.chunk.js"
+    "static/js/2.dd9be805.chunk.js",
+    "static/css/main.ee0690dc.chunk.css",
+    "static/js/main.b3097996.chunk.js"
   ]
 }

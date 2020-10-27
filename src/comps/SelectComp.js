@@ -82,11 +82,19 @@ class SelectComp extends Component {
           allowClear
           style={{ width: '100%', marginBottom: '2em' }}
           placeholder='Select parameters to display'
+          defaultValue={['1', '2', '3', '4', '5']}
           onChange={this.handleChange}
         >
           {children}
         </Select>
-        <Table columns={this.state.filteredCols} dataSource={data} />
+        <Table
+          columns={
+            this.state.filteredCols.length <= 0
+              ? this.state.columns
+              : this.state.filteredCols
+          }
+          dataSource={data}
+        />
       </>
     );
   }

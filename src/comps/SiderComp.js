@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
+import Icon from '@ant-design/icons';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import {
   AppstoreOutlined,
@@ -13,6 +14,10 @@ import {
   BankOutlined,
   RocketOutlined,
 } from '@ant-design/icons';
+
+import CruiseShip from '../icons/boat.svg';
+import Rental from '../icons/rental.svg';
+import Plane from '../icons/plane.svg';
 
 const { Sider } = Layout;
 
@@ -35,7 +40,16 @@ function SiderComp() {
           </Menu.ItemGroup>
         </SubMenu>
         <Menu.Item icon={<CompassOutlined />}>Destination</Menu.Item>
-        <Menu.Item icon={<CompassOutlined />}>Airlines</Menu.Item>
+        <Menu.Item>
+          <img
+            src={Plane}
+            alt=''
+            height={14}
+            width={14}
+            style={{ marginRight: '0.8em' }}
+          />
+          Airlines
+        </Menu.Item>
         <Menu.Item icon={<CompassOutlined />}>Airports</Menu.Item>
         <Menu.Item icon={<HomeOutlined />}>Airports</Menu.Item>
         <Menu.Item icon={<CarOutlined />}>Mobility</Menu.Item>
@@ -44,6 +58,26 @@ function SiderComp() {
         </Menu.Item>
         <Menu.Item icon={<RocketOutlined />}>Amusement Parks</Menu.Item>
         <Menu.Item icon={<BankOutlined />}>Museums</Menu.Item>
+        <Menu.Item>
+          <img
+            src={CruiseShip}
+            alt=''
+            height={14}
+            width={14}
+            style={{ marginRight: '0.8em' }}
+          />
+          Cruise
+        </Menu.Item>
+        <Menu.Item>
+          <img
+            src={Rental}
+            alt=''
+            height={14}
+            width={14}
+            style={{ marginRight: '0.8em' }}
+          />
+          Short Term Rentals
+        </Menu.Item>
       </Menu>
     </Sider>
   );

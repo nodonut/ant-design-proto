@@ -45,5 +45,9 @@
 
 .header {
   float: right;
-  margin-left: 0.6em;
+}
+
+.form_item__header {
+  float: right;
+  margin-right: 0.8em;
 }

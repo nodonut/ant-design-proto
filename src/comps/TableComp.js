@@ -24,6 +24,7 @@ const onSearch = (value) => console.log(value);
 
 const columns = [
   {
+    key: 1,
     title: 'Score',
     dataIndex: 'score',
     defaultSortOrder: 'descend',
@@ -31,6 +32,7 @@ const columns = [
     sorter: (a, b) => a.score - b.score,
   },
   {
+    key: 2,
     title: 'Airline',
     dataIndex: 'airline',
     filters: [
@@ -46,19 +48,23 @@ const columns = [
     sortDirections: ['descend'],
   },
   {
+    key: 3,
     title: 'Thermal Screening',
     dataIndex: 'therm_screen',
     defaultSortOrder: 'descend',
   },
   {
+    key: 4,
     title: 'Face Masks',
     dataIndex: 'face_masks',
   },
   {
+    key: 5,
     title: 'Hand Sanitizer',
     dataIndex: 'hand_san',
   },
   {
+    key: 6,
     title: 'Health Declaration Form',
     dataIndex: 'health_dec_form',
   },

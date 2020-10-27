@@ -6,6 +6,12 @@ import {
   MailOutlined,
   SettingOutlined,
   FilterOutlined,
+  CompassOutlined,
+  HomeOutlined,
+  CarOutlined,
+  CustomerServiceOutlined,
+  BankOutlined,
+  RocketOutlined,
 } from '@ant-design/icons';
 
 const { Sider } = Layout;
@@ -28,6 +34,16 @@ function SiderComp() {
             <Menu.Item key='precautions'>Precautions</Menu.Item>
           </Menu.ItemGroup>
         </SubMenu>
+        <Menu.Item icon={<CompassOutlined />}>Destination</Menu.Item>
+        <Menu.Item icon={<CompassOutlined />}>Airlines</Menu.Item>
+        <Menu.Item icon={<CompassOutlined />}>Airports</Menu.Item>
+        <Menu.Item icon={<HomeOutlined />}>Airports</Menu.Item>
+        <Menu.Item icon={<CarOutlined />}>Mobility</Menu.Item>
+        <Menu.Item icon={<CustomerServiceOutlined />}>
+          Activities/Events
+        </Menu.Item>
+        <Menu.Item icon={<RocketOutlined />}>Amusement Parks</Menu.Item>
+        <Menu.Item icon={<BankOutlined />}>Museums</Menu.Item>
       </Menu>
     </Sider>
   );

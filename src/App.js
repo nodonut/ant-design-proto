@@ -5,6 +5,7 @@ import TableComp from './comps/TableComp';
 import HeaderComp from './comps/HeaderComp';
 import SiderComp from './comps/SiderComp';
 import ColSwitch from './comps/ColSwitch';
+import SelectComp from './comps/SelectComp';
 
 const { Footer, Sider, Content } = Layout;
 
@@ -21,7 +22,7 @@ function App() {
                 <Breadcrumb.Item>Categories</Breadcrumb.Item>
               </Breadcrumb>
               <div className='site-layout-content'>
-                <ColSwitch />
+                <SelectComp />
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Example Footer</Footer>

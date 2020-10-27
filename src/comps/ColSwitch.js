@@ -87,10 +87,10 @@ class ColSwitch extends Component {
 
   onChangeScore = () => {
     const arr = getColumns();
-    arr.filter((item) => item.title !== 'Score');
+    const oldState = [...this.state.column];
     if (this.state.column[0].dataIndex === 'score') {
       this.setState({
-        column: [...arr.filter((item) => item.title !== 'Score')],
+        column: [...this.state.column.filter((item) => item.title !== 'Score')],
       });
     } else {
       this.setState({
@@ -101,16 +101,22 @@ class ColSwitch extends Component {
 
   onChangeAirline = () => {
     const arr = getColumns();
-    arr.filter((item) => item.title !== 'Airline');
+    const oldState = [...this.state.column];
     if (this.state.column[1].dataIndex === 'airline') {
       this.setState({
-        column: [...arr.filter((item) => item.title !== 'Airline')],
+        column: [
+          ...this.state.column.filter((item) => item.title !== 'Airline'),
+        ],
       });
     } else {
       this.setState({
         column: [...arr],
       });
     }
+  };
+
+  onClick = (checked, event) => {
+    console.log(this.state.column);
   };
   render() {
     const { xScroll, yScroll, ...state } = this.state;
@@ -129,16 +135,22 @@ class ColSwitch extends Component {
           className='components-table-demo-control-bar'
           style={{ marginBottom: 16 }}
         >
-          <Form.Item label='Score Header' className='score header'>
+          <Form.Item label='Score' className='form_item__header'>
             <Switch
               checked={this.state.column[0].dataIndex === 'score'}
               onChange={this.onChangeScore}
+              className='score header'
+              onClick={this.onClick}
             />
           </Form.Item>
-          <Form.Item label='Airline Header' className='airline header'>
+          <Form.Item label='Airline' className='form_item__header'>
             <Switch
-              checked={this.state.column[1].dataIndex === 'airline'}
+              checked={this.state.column.find(
+                (item) => item.title === 'Airline'
+              )}
               onChange={this.onChangeAirline}
+              className='airline header'
+              onClick={this.onClick}
             />
           </Form.Item>
           <Form.Item label='Size'>
@@ -149,16 +161,17 @@ class ColSwitch extends Component {
             </Radio.Group>
           </Form.Item>
         </Form>
-        <Table
-          {...this.state}
-          columns={this.state.column}
-          dataSource={state.hasData ? data : null}
-          pagination={{ position: [this.state.top, this.state.bottom] }}
-          scroll={scroll}
-        />
       </>
     );
   }
 }
 
 export default ColSwitch;
+
+// <Table
+//   {...this.state}
+//   columns={this.state.column}
+//   dataSource={state.hasData ? data : null}
+//   pagination={{ position: [this.state.top, this.state.bottom] }}
+//   scroll={scroll}
+// />

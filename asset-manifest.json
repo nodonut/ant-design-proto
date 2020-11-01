@@ -1,28 +1,25 @@
 {
   "files": {
     "main.css": "/ant-design-proto/static/css/main.0018f816.chunk.css",
-    "main.js": "/ant-design-proto/static/js/main.882a4d20.chunk.js",
-    "main.js.map": "/ant-design-proto/static/js/main.882a4d20.chunk.js.map",
-    "runtime-main.js": "/ant-design-proto/static/js/runtime-main.64dee42a.js",
-    "runtime-main.js.map": "/ant-design-proto/static/js/runtime-main.64dee42a.js.map",
+    "main.js": "/ant-design-proto/static/js/main.2063c7c9.chunk.js",
+    "main.js.map": "/ant-design-proto/static/js/main.2063c7c9.chunk.js.map",
+    "runtime-main.js": "/ant-design-proto/static/js/runtime-main.6513082e.js",
+    "runtime-main.js.map": "/ant-design-proto/static/js/runtime-main.6513082e.js.map",
     "static/css/2.fd8a6fac.chunk.css": "/ant-design-proto/static/css/2.fd8a6fac.chunk.css",
-    "static/js/2.395b5daf.chunk.js": "/ant-design-proto/static/js/2.395b5daf.chunk.js",
-    "static/js/2.395b5daf.chunk.js.map": "/ant-design-proto/static/js/2.395b5daf.chunk.js.map",
-    "static/js/3.d9911bd7.chunk.js": "/ant-design-proto/static/js/3.d9911bd7.chunk.js",
-    "static/js/3.d9911bd7.chunk.js.map": "/ant-design-proto/static/js/3.d9911bd7.chunk.js.map",
+    "static/js/2.d9834936.chunk.js": "/ant-design-proto/static/js/2.d9834936.chunk.js",
+    "static/js/2.d9834936.chunk.js.map": "/ant-design-proto/static/js/2.d9834936.chunk.js.map",
+    "static/js/3.504d85ca.chunk.js": "/ant-design-proto/static/js/3.504d85ca.chunk.js",
+    "static/js/3.504d85ca.chunk.js.map": "/ant-design-proto/static/js/3.504d85ca.chunk.js.map",
     "index.html": "/ant-design-proto/index.html",
     "static/css/2.fd8a6fac.chunk.css.map": "/ant-design-proto/static/css/2.fd8a6fac.chunk.css.map",
     "static/css/main.0018f816.chunk.css.map": "/ant-design-proto/static/css/main.0018f816.chunk.css.map",
-    "static/js/2.395b5daf.chunk.js.LICENSE.txt": "/ant-design-proto/static/js/2.395b5daf.chunk.js.LICENSE.txt",
-    "static/media/boat.5b12e13f.svg": "/ant-design-proto/static/media/boat.5b12e13f.svg",
-    "static/media/plane.dd7e4926.svg": "/ant-design-proto/static/media/plane.dd7e4926.svg",
-    "static/media/rental.01016dd0.svg": "/ant-design-proto/static/media/rental.01016dd0.svg"
+    "static/js/2.d9834936.chunk.js.LICENSE.txt": "/ant-design-proto/static/js/2.d9834936.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.64dee42a.js",
+    "static/js/runtime-main.6513082e.js",
     "static/css/2.fd8a6fac.chunk.css",
-    "static/js/2.395b5daf.chunk.js",
+    "static/js/2.d9834936.chunk.js",
     "static/css/main.0018f816.chunk.css",
-    "static/js/main.882a4d20.chunk.js"
+    "static/js/main.2063c7c9.chunk.js"
   ]
 }

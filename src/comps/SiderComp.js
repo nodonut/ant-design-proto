@@ -25,7 +25,9 @@ function SiderComp() {
   return (
     <Sider>
       <Menu defaultSelectedKeys={['categories']} mode='inline'>
-        <Menu.Item key='dashboard'>Dashboard</Menu.Item>
+        <Menu.Item key='dashboard'>
+          <a href='/'>Dashboard</a>
+        </Menu.Item>
         <SubMenu
           title={
             <span>

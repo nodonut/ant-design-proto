@@ -1,13 +1,10 @@
 import './App.css';
-import { Breadcrumb, Button, Layout, Menu, Typography, Table } from 'antd';
+import { Layout } from 'antd';
 
-import TableComp from './comps/TableComp';
 import HeaderComp from './comps/HeaderComp';
-import SiderComp from './comps/SiderComp';
-import ColSwitch from './comps/ColSwitch';
 import SelectComp from './comps/SelectComp';
 
-const { Footer, Sider, Content } = Layout;
+const { Footer, Content } = Layout;
 
 function App() {
   return (
@@ -15,17 +12,13 @@ function App() {
       <Layout>
         <HeaderComp />
         <Layout>
-          <SiderComp />
           <Layout>
             <Content style={{ padding: '0 50px' }}>
-              <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>Categories</Breadcrumb.Item>
-              </Breadcrumb>
               <div className='site-layout-content'>
                 <SelectComp />
               </div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>Example Footer</Footer>
+            <Footer style={{ textAlign: 'center' }}>Safe Travel</Footer>
           </Layout>
         </Layout>
       </Layout>

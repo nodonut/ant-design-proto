@@ -5,6 +5,7 @@ import {
   CheckCircleTwoTone,
   ExclamationCircleTwoTone,
 } from '@ant-design/icons';
+import { getCategory } from './HeaderComp';
 
 ///////////////////////////
 const client = new ApolloClient({
@@ -38,16 +39,20 @@ const children = [
   },
 ];
 
+let curCat = getCategory();
+console.log(curCat);
+
 const paramContainer = [];
 let columnIds = [];
 let pageNumber = 1;
 let category = 'Airlines';
+let defValHolder = [];
 
 class SelectComp extends Component {
   state = {
     columns: [...children],
     filteredCols: [],
-    defaultValue: [],
+    defaultValue: [...defValHolder],
     columnIds,
     data: [],
     pagination: {
@@ -150,6 +155,7 @@ class SelectComp extends Component {
   }
 
   handleTableChange(page) {
+    console.log(page);
     const query = gql`
       query companies($page: Int!, $pageSize: Int!, $category: Mixed!) {
         companies(
@@ -282,14 +288,21 @@ class SelectComp extends Component {
           });
 
           children.forEach((column) => {
-            if (column.category === this.state.category) {
-              columnIds.push(column.key);
+            if (
+              column.category === this.state.category &&
+              defValHolder.length < 6
+            ) {
+              defValHolder.push(column.key);
             }
           });
 
           let paramOptions = [];
           parameters.forEach((param) => {
-            paramOptions.push(<Option key={param.id}>{param.name}</Option>);
+            paramOptions.push(
+              <Option key={param.id} value={param.id}>
+                {param.name}
+              </Option>
+            );
           });
           currentBucket.push(
             <OptGroup key={id} label={name}>
@@ -302,7 +315,10 @@ class SelectComp extends Component {
 
         this.setState({
           buckets: currentBucket,
-          filteredCols: [...children.slice(0, 8)],
+          filteredCols: [
+            ...children.slice(0, 3),
+            ...children.filter((column) => defValHolder.includes(column.key)),
+          ],
         });
       });
   }
@@ -350,8 +366,6 @@ class SelectComp extends Component {
       .then((result) => {
         let currentData = [];
         result.data.companies.data.forEach((company) => {
-          let valueText = '';
-
           let singleData = {
             key: company.id,
             rating: company.rating,
@@ -364,7 +378,6 @@ class SelectComp extends Component {
             let value = '';
             all_company_parameter_values.forEach((comp) => {
               value = comp.value;
-              valueText = comp.value_text;
               singleData[
                 comp.parameter.name.toLowerCase().replace(/[ ]/g, '_')
               ] = value;
@@ -492,7 +505,7 @@ class SelectComp extends Component {
           style={{ width: '100%', marginBottom: '1em' }}
           placeholder='Select parameters'
           onChange={this.handleChange}
-          defaultValue={this.state.defaultValue}
+          defaultValue={defValHolder}
         >
           {this.state.buckets}
         </Select>

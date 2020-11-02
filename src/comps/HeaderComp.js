@@ -13,13 +13,14 @@ const headerStyle = {
   paddingBottom: '2em',
 };
 
-function HeaderComp() {
+let currentCategory = '';
+export function HeaderComp() {
   const menu = (
     <Menu className={'categories'}>
-      <Menu.Item>
+      <Menu.Item onClick={(currentCategory = 'Airlines')}>
         <a target='_blank'>Airlines</a>
       </Menu.Item>
-      <Menu.Item>
+      <Menu.Item onClick={(currentCategory = 'Airports')}>
         <a target='_blank'>Airports</a>
       </Menu.Item>
       <Menu.Item>
@@ -72,4 +73,6 @@ function HeaderComp() {
   );
 }
 
-export default HeaderComp;
+export function getCategory() {
+  return currentCategory;
+}

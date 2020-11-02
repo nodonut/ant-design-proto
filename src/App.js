@@ -1,8 +1,9 @@
 import './App.css';
 import { Layout } from 'antd';
 
-import HeaderComp from './comps/HeaderComp';
+import { HeaderComp } from './comps/HeaderComp';
 import SelectComp from './comps/SelectComp';
+import Dashboard from './comps/Dashboard';
 
 const { Footer, Content } = Layout;
 

@@ -19,34 +19,36 @@ const { Option, OptGroup } = Select;
 const children = [
   {
     key: '01',
+    dataIndex: 'imageurl',
+    render: (theImageURL) => <img src={theImageURL} height={50} width={50} />,
+  },
+  {
+    key: '02',
     title: 'Name',
     dataIndex: 'name',
     sorter: (a, b) => a.name.length - b.name.length,
     sortDirections: ['descend'],
   },
   {
-    key: '02',
-    dataIndex: 'imageurl',
-    render: (theImageURL) => <img src={theImageURL} />,
-  },
-  {
     key: '03',
     title: 'Rating',
     dataIndex: 'rating',
+    sorter: (a, b) => a.rating - b.rating,
+    sortDirections: ['descend'],
   },
 ];
 
 const paramContainer = [];
-let cat = '';
-let columnTitles = [];
+let columnIds = [];
 let pageNumber = 1;
+let category = 'Airlines';
 
 class SelectComp extends Component {
   state = {
     columns: [...children],
     filteredCols: [],
     defaultValue: [],
-    columnIds: [],
+    columnIds,
     data: [],
     pagination: {
       current: 1,
@@ -55,7 +57,7 @@ class SelectComp extends Component {
     buckets: [],
     searchInput: '',
     countries: [],
-    category: 'airlines',
+    category,
     airlineCols: [],
   };
 
@@ -63,13 +65,18 @@ class SelectComp extends Component {
     this.loadData();
     this.populateBuckets();
     this.populateCountrySelect();
+    this.setState({ defaultValue: [...columnIds] });
   }
 
   loadData(num = 1) {
     this.setState({ loading: true });
     const query = gql`
-      query companies($page: Int!) {
-        companies(page: $page, first: 100) {
+      query companies($page: Int!, $category: Mixed!) {
+        companies(
+          page: $page
+          first: 100
+          hasCategory: { column: NAME, value: $category }
+        ) {
           paginatorInfo {
             perPage
             hasMorePages
@@ -85,11 +92,13 @@ class SelectComp extends Component {
               id
               name
             }
-            company_parameter_values_for_employee {
+            all_company_parameter_values {
               parameter {
-                role
                 name
+                id
               }
+              value
+              value_text
             }
           }
         }
@@ -100,39 +109,40 @@ class SelectComp extends Component {
         query: query,
         variables: {
           page: num,
+          category: this.state.category,
         },
       })
       .then((result) => {
         console.log(result);
+        let currentPage = result.data.companies.paginatorInfo.currentPage;
         let totalPage = result.data.companies.paginatorInfo.total;
         result.data.companies.data.forEach((company) => {
-          if (company.category.name.toLowerCase() === this.state.category) {
-            return dataTable.push({
+          if (company.category.name === this.state.category) {
+            let singleData = {
               key: company.id,
               rating: company.rating,
               imageurl: company.logo,
               name: company.name,
               category: company.category.name,
-              thermal_screening: <CheckCircleTwoTone twoToneColor='#52c41a' />,
-
-              face_masks: <CheckCircleTwoTone twoToneColor='#52c41a' />,
-              hand_sanitizer: (
-                <ExclamationCircleTwoTone twoToneColor='orange' />
-              ),
-              health_dec_form: (
-                <ExclamationCircleTwoTone twoToneColor='orange' />
-              ),
-              test_bucket_parameter: (
-                <ExclamationCircleTwoTone twoToneColor='orange' />
-              ),
+            };
+            const { all_company_parameter_values } = company;
+            let value = '';
+            let valueText;
+            all_company_parameter_values.forEach((comp) => {
+              value = comp.value;
+              valueText = comp.value_text;
+              singleData[
+                comp.parameter.name.toLowerCase().replace(/[ ]/g, '_')
+              ] = value;
             });
+            return dataTable.push(singleData);
           }
         });
         this.setState({
-          category: cat,
           loading: false,
           data: dataTable,
           pagination: {
+            current: currentPage,
             total: totalPage,
           },
         });
@@ -141,8 +151,12 @@ class SelectComp extends Component {
 
   handleTableChange(page) {
     const query = gql`
-      query companies($page: Int!, $pageSize: Int!) {
-        companies(page: $page, first: $pageSize) {
+      query companies($page: Int!, $pageSize: Int!, $category: Mixed!) {
+        companies(
+          page: $page
+          first: $pageSize
+          hasCategory: { column: NAME, value: $category }
+        ) {
           paginatorInfo {
             perPage
             hasMorePages
@@ -152,12 +166,19 @@ class SelectComp extends Component {
           data {
             id
             name
+            logo
             rating
-            company_parameter_values_for_employee {
+            category {
+              id
+              name
+            }
+            all_company_parameter_values {
               parameter {
-                role
                 name
+                id
               }
+              value
+              value_text
             }
           }
         }
@@ -169,163 +190,57 @@ class SelectComp extends Component {
         variables: {
           page: page.current,
           pageSize: page.pageSize,
+          category: this.state.category,
         },
       })
       .then((result) => {
         let totalPage = result.data.companies.paginatorInfo.total;
+        let currentPage = result.data.companies.paginatorInfo.currentPage;
         let currentData = [];
         result.data.companies.data.forEach((company) => {
-          return currentData.push({
-            key: company.id,
-            rating: company.rating,
-            name: company.name,
-            therm_screen: <CheckCircleTwoTone twoToneColor='#52c41a' />,
-            face_masks: <CheckCircleTwoTone twoToneColor='#52c41a' />,
-            hand_san: <ExclamationCircleTwoTone twoToneColor='orange' />,
-            health_dec_form: <ExclamationCircleTwoTone twoToneColor='orange' />,
-          });
+          if (company.category.name === this.state.category) {
+            let singleData = {
+              key: company.id,
+              rating: company.rating,
+              imageurl: company.logo,
+              name: company.name,
+              category: company.category.name,
+            };
+            const { all_company_parameter_values } = company;
+            let value = '';
+            let valueText;
+            all_company_parameter_values.forEach((comp) => {
+              value = comp.value;
+              valueText = comp.value_text;
+              singleData[
+                comp.parameter.name.toLowerCase().replace(/[ ]/g, '_')
+              ] = value;
+            });
+            return currentData.push(singleData);
+          }
         });
         this.setState({
           loading: false,
           data: currentData,
           pagination: {
+            current: currentPage,
             total: totalPage,
           },
         });
       });
   }
 
-  // sorterFunctionASC() {
-  //   client
-  //     .query({
-  //       query: gql`
-  //         query {
-  //           companies(orderBy: { field: NAME, order: ASC }, first: 100) {
-  //             paginatorInfo {
-  //               perPage
-  //               hasMorePages
-  //               currentPage
-  //               total
-  //             }
-  //             data {
-  //               id
-  //               name
-  //               rating
-  //               company_parameter_values_for_employee {
-  //                 parameter {
-  //                   role
-  //                   name
-  //                 }
-  //               }
-  //             }
-  //           }
-  //         }
-  //       `,
-  //     })
-  //     .then((result) => {
-  //       console.log(result);
-  //       let totalPage = result.data.companies.paginatorInfo.total;
-  //       let currentData = [];
-  //       result.data.companies.data.forEach((company) => {
-  //         return currentData.push({
-  //           key: company.id,
-  //           rating: company.rating,
-  //           name: company.name,
-  //           therm_screen: <CheckCircleTwoTone twoToneColor='#52c41a' />,
-  //           face_masks: <CheckCircleTwoTone twoToneColor='#52c41a' />,
-  //           hand_san: <ExclamationCircleTwoTone twoToneColor='orange' />,
-  //           health_dec_form: <ExclamationCircleTwoTone twoToneColor='orange' />,
-  //         });
-  //       });
-  //       this.setState({
-  //         loading: false,
-  //         data: currentData,
-  //         pagination: {
-  //           total: totalPage,
-  //         },
-  //       });
-  //     });
-  // }
-
-  // sorterFunctionDESC() {
-  //   client
-  //     .query({
-  //       query: gql`
-  //         query {
-  //           companies(orderBy: { field: NAME, order: DESC }, first: 100) {
-  //             paginatorInfo {
-  //               perPage
-  //               hasMorePages
-  //               currentPage
-  //               total
-  //             }
-  //             data {
-  //               id
-  //               name
-  //               rating
-  //               company_parameter_values_for_employee {
-  //                 parameter {
-  //                   role
-  //                   name
-  //                 }
-  //               }
-  //             }
-  //           }
-  //         }
-  //       `,
-  //     })
-  //     .then((result) => {
-  //       console.log(result);
-  //       let totalPage = result.data.companies.paginatorInfo.total;
-  //       let currentData = [];
-  //       result.data.companies.data.forEach((company) => {
-  //         return currentData.push({
-  //           key: company.id,
-  //           rating: company.rating,
-  //           name: company.name,
-  //           therm_screen: <CheckCircleTwoTone twoToneColor='#52c41a' />,
-  //           face_masks: <CheckCircleTwoTone twoToneColor='#52c41a' />,
-  //           hand_san: <ExclamationCircleTwoTone twoToneColor='orange' />,
-  //           health_dec_form: <ExclamationCircleTwoTone twoToneColor='orange' />,
-  //         });
-  //       });
-  //       this.setState({
-  //         loading: false,
-  //         data: currentData,
-  //         pagination: {
-  //           total: totalPage,
-  //         },
-  //       });
-  //     });
-  // }
-
-  // sorter(value) {
-  //   if (value === 'ascend') {
-  //     this.sorterFunctionASC();
-  //   } else if (value === 'descend') {
-  //     this.sorterFunctionDESC();
-  //   }
-  // }
-
   handleChange = (value) => {
+    console.log(value);
     this.setState({
       filteredCols: [
-        ...children.filter((column) => column.title === 'Score'),
+        ...children.filter((column) => column.dataIndex === 'imageurl'),
         ...children.filter((column) => column.title === 'Name'),
+        ...children.filter((column) => column.title === 'Rating'),
         ...children.filter((column) => value.includes(column.key)),
       ],
     });
   };
-
-  // handleOptGrpChange = (value) => {
-  //   this.setState({
-  //     filteredCols: [
-  //       ...children.filter((column) => column.name === 'score'),
-  //       ...children.filter((column) => column.name === 'name'),
-  //       ...children.filter((column) => column.group === value),
-  //     ],
-  //   });
-  // };
 
   populateBuckets() {
     client
@@ -340,6 +255,7 @@ class SelectComp extends Component {
                 id
                 name
                 category {
+                  id
                   name
                 }
                 description
@@ -353,21 +269,24 @@ class SelectComp extends Component {
         result.data.buckets.forEach((bucket) => {
           const { id, name } = bucket;
           const { parameters } = bucket;
-          parameters.forEach((param) =>
-            children.push({
-              key: param.id,
-              title: param.name,
-              dataIndex: param.name.toLowerCase().replace(/[ ]/g, '_'),
-              group: param.name.toLowerCase(),
-              category: param.category.name.toLowerCase(),
-            })
-          );
-          children.forEach((column) => {
-            if (this.state.category === column.category) {
-              this.state.airlineCols.push(column);
-              columnTitles.push(column.title);
+          parameters.forEach((param) => {
+            if (param.category.name === this.state.category) {
+              children.push({
+                key: param.id,
+                title: param.name,
+                dataIndex: param.name.toLowerCase().replace(/[ ]/g, '_'),
+                group: param.name.toLowerCase(),
+                category: param.category.name,
+              });
             }
           });
+
+          children.forEach((column) => {
+            if (column.category === this.state.category) {
+              columnIds.push(column.key);
+            }
+          });
+
           let paramOptions = [];
           parameters.forEach((param) => {
             paramOptions.push(<Option key={param.id}>{param.name}</Option>);
@@ -380,15 +299,10 @@ class SelectComp extends Component {
 
           paramOptions = [];
         });
+
         this.setState({
           buckets: currentBucket,
-          filteredCols: [
-            ...children.filter((column) => column.dataIndex === 'imageurl'),
-            ...children.filter((column) => column.title === 'Name'),
-            ...children.filter((column) => column.title === 'Rating'),
-            ...this.state.airlineCols.slice(0, 5),
-          ],
-          defaultValue: [...columnTitles.slice(0, 5)],
+          filteredCols: [...children.slice(0, 8)],
         });
       });
   }
@@ -398,13 +312,28 @@ class SelectComp extends Component {
 
     // Query
     const query = gql`
-      query($searchInput: Mixed!) {
-        companies(where: { column: NAME, value: $searchInput }) {
+      query($searchInput: Mixed!, $category: Mixed!) {
+        companies(
+          where: { column: NAME, value: $searchInput }
+          hasCategory: { column: NAME, value: $category }
+        ) {
           data {
             id
             name
             logo
             rating
+            category {
+              id
+              name
+            }
+            all_company_parameter_values {
+              parameter {
+                name
+                id
+              }
+              value
+              value_text
+            }
           }
         }
       }
@@ -415,21 +344,33 @@ class SelectComp extends Component {
         query: query,
         variables: {
           searchInput: value,
+          category: category,
         },
       })
       .then((result) => {
         let currentData = [];
         result.data.companies.data.forEach((company) => {
-          return currentData.push({
+          let valueText = '';
+
+          let singleData = {
             key: company.id,
             rating: company.rating,
             imageurl: company.logo,
             name: company.name,
-            thermal_screening: <CheckCircleTwoTone twoToneColor='#52c41a' />,
-            face_masks: <CheckCircleTwoTone twoToneColor='#52c41a' />,
-            hand_sanitizer: <ExclamationCircleTwoTone twoToneColor='orange' />,
-            health_dec_form: <ExclamationCircleTwoTone twoToneColor='orange' />,
-          });
+            category: company.category.name,
+          };
+          if (company.category.name === this.state.category) {
+            const { all_company_parameter_values } = company;
+            let value = '';
+            all_company_parameter_values.forEach((comp) => {
+              value = comp.value;
+              valueText = comp.value_text;
+              singleData[
+                comp.parameter.name.toLowerCase().replace(/[ ]/g, '_')
+              ] = value;
+            });
+            return currentData.push(singleData);
+          }
         });
         this.setState({
           loading: false,
@@ -476,13 +417,28 @@ class SelectComp extends Component {
 
   selectCountrySearch(value) {
     const query = gql`
-      query($country: Mixed!) {
-        companies(hasCountry: { column: NAME, value: $country }) {
+      query($country: Mixed!, $category: Mixed!) {
+        companies(
+          hasCountry: { column: NAME, value: $country }
+          hasCategory: { column: NAME, value: $category }
+        ) {
           data {
             id
             name
             rating
             logo
+            category {
+              id
+              name
+            }
+            all_company_parameter_values {
+              parameter {
+                name
+                id
+              }
+              value
+              value_text
+            }
           }
         }
       }
@@ -493,21 +449,32 @@ class SelectComp extends Component {
         query: query,
         variables: {
           country: value,
+          category: this.state.category,
         },
       })
       .then((result) => {
         let currentData = [];
         result.data.companies.data.forEach((company) => {
-          return currentData.push({
+          let singleData = {
             key: company.id,
             rating: company.rating,
             imageurl: company.logo,
             name: company.name,
-            thermal_screening: <CheckCircleTwoTone twoToneColor='#52c41a' />,
-            face_masks: <CheckCircleTwoTone twoToneColor='#52c41a' />,
-            hand_sanitizer: <ExclamationCircleTwoTone twoToneColor='orange' />,
-            health_dec_form: <ExclamationCircleTwoTone twoToneColor='orange' />,
-          });
+            category: company.category.name,
+          };
+          if (company.category.name === this.state.category) {
+            const { all_company_parameter_values } = company;
+            let value = '';
+            let valueText = '';
+            all_company_parameter_values.forEach((comp) => {
+              value = comp.value;
+              valueText = comp.value_text;
+              singleData[
+                comp.parameter.name.toLowerCase().replace(/[ ]/g, '_')
+              ] = value;
+            });
+            return currentData.push(singleData);
+          }
         });
         this.setState({
           loading: false,
